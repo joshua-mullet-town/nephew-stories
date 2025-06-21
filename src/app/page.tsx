@@ -245,7 +245,7 @@ function WelcomeScreen({ onNext }: { onNext: (favoriteBooks: string) => void }) 
           <span className="text-amber-600">Nephew Stories</span>
         </h1>
         <p className="text-xl text-amber-700 max-w-2xl mx-auto text-balance">
-          Let's create a magical adventure just for you! Tell me about the books that capture your imagination.
+          Let&apos;s create a magical adventure just for you! Tell me about the books that capture your imagination.
         </p>
       </div>
 
