@@ -96,7 +96,7 @@ Child's Input:
 - Favorite books: ${favoriteBooks}
 - What they love: ${whyLoveBooks}
 
-Return ONLY a JSON object with this structure:
+CRITICAL: Return ONLY a valid JSON object with this exact structure. Do NOT wrap in markdown code blocks or add any explanatory text:
 {
   "title": "Engaging story title",
   "premise": "2-3 sentence story premise that hooks the reader",
@@ -132,7 +132,18 @@ Return ONLY a JSON object with this structure:
     throw new Error('No response from OpenAI for story foundation');
   }
 
-  return JSON.parse(responseText);
+  // Clean up the response by removing markdown code blocks if present
+  const cleanedResponse = responseText
+    .replace(/```json\s*/g, '')
+    .replace(/```\s*/g, '')
+    .trim();
+
+  try {
+    return JSON.parse(cleanedResponse);
+  } catch (parseError) {
+    console.error('Failed to parse story foundation response:', responseText);
+    throw new Error('Invalid JSON response from AI for story foundation');
+  }
 }
 
 async function generateCompleteStoryTree(foundation: any, favoriteBooks: string, whyLoveBooks: string): Promise<CompleteStory> {
@@ -159,7 +170,7 @@ Child's Preferences:
 - Favorite books: ${favoriteBooks}
 - What they love: ${whyLoveBooks}
 
-Return ONLY a JSON object with this structure:
+CRITICAL: Return ONLY a valid JSON object with this exact structure. Do NOT wrap in markdown code blocks or add any explanatory text:
 {
   "id": "story_${Date.now()}",
   "title": "${foundation.title}",
@@ -214,7 +225,19 @@ CRITICAL: Ensure character names and traits remain consistent across ALL segment
     throw new Error('No response from OpenAI for complete story');
   }
 
-  const storyData = JSON.parse(responseText);
+  // Clean up the response by removing markdown code blocks if present
+  const cleanedResponse = responseText
+    .replace(/```json\s*/g, '')
+    .replace(/```\s*/g, '')
+    .trim();
+
+  let storyData;
+  try {
+    storyData = JSON.parse(cleanedResponse);
+  } catch (parseError) {
+    console.error('Failed to parse complete story response:', responseText);
+    throw new Error('Invalid JSON response from AI for complete story');
+  }
   
   // Create the complete story with all possible paths pre-generated
   const completeStory: CompleteStory = {
