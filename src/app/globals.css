@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .story-container {
+    @apply max-w-4xl mx-auto px-6 py-8 md:px-8 lg:px-12 relative;
+  }
+  
+  .story-page {
+    @apply relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl 
+           border border-amber-200/50 p-8 md:p-12 lg:p-16
+           min-h-[600px] max-w-3xl mx-auto;
+    background: linear-gradient(145deg, #fefdfb 0%, #faf8f4 100%);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(139, 69, 19, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
+  }
+  
+  .story-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #d97706 0%, #dc2626 50%, #d97706 100%);
+    opacity: 0.3;
+  }
+  
+  .story-page::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: repeating-linear-gradient(
+      to right,
+      transparent 0px,
+      transparent 8px,
+      #e5e7eb 8px,
+      #e5e7eb 10px
+    );
+    opacity: 0.4;
+  }
+  
+  .story-text {
+    @apply text-lg leading-relaxed text-story-text font-story relative;
+    line-height: 1.9;
+    font-family: 'Georgia', 'Charter', 'Times New Roman', serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    margin-left: 80px;
+  }
+  
+  .story-paragraph {
+    @apply mb-8 first:mt-0 last:mb-0;
+    text-indent: 2em;
+  }
+  
+  .story-paragraph:first-letter {
+    @apply text-6xl font-bold float-left leading-none mr-2 mt-1;
+    color: #8b5a3c;
+    font-family: 'Georgia', serif;
+  }
+  
+  .choice-button {
+    @apply w-full p-6 text-left rounded-xl border-2 border-amber-300/40 
+           bg-gradient-to-r from-amber-50/80 to-orange-50/80
+           hover:from-amber-100/90 hover:to-orange-100/90
+           hover:border-amber-400/60 hover:shadow-lg
+           transition-all duration-300 ease-out
+           focus:outline-none focus:ring-2 focus:ring-amber-400/50
+           transform hover:-translate-y-1 hover:scale-[1.02]
+           shadow-md relative overflow-hidden;
+  }
+  
+  .choice-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+  
+  .choice-button:hover::before {
+    transform: translateX(100%);
+  }
+  
+  .input-field {
+    @apply w-full p-4 text-lg rounded-xl border-2 border-amber-200/60
+           focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/20
+           bg-white/95 transition-all duration-200 shadow-inner;
+    font-family: 'Georgia', serif;
+  }
+  
+  .primary-button {
+    @apply px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-600 
+           text-white rounded-xl hover:from-amber-700 hover:to-orange-700
+           transition-all duration-200 focus:outline-none focus:ring-2 
+           focus:ring-amber-500/50 shadow-lg hover:shadow-xl font-medium
+           transform hover:scale-105;
+  }
+  
+  .loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600;
+  }
+  
+  .page-turn-enter {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-15deg) translateX(-100px);
+  }
+  
+  .page-turn-enter-active {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) translateX(0px);
+    transition: all 800ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  
+  .page-turn-exit {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) translateX(0px);
+  }
+  
+  .page-turn-exit-active {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(15deg) translateX(100px);
+    transition: all 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  
+  .story-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    filter: blur(1px) brightness(1.1) contrast(0.8);
+    transition: all 1000ms ease-in-out;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
