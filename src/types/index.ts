@@ -44,7 +44,7 @@ export interface CompleteStory {
   characters: Character[];
   theme: string;
   segments: StorySegment[];
-  allPossiblePaths: Map<string, StorySegment[]>; // Pre-generated paths
+  allPossiblePaths?: Map<string, StorySegment[]>; // Pre-generated paths
 }
 
 export interface Story {

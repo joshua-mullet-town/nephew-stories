@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { AppState, UserPreferences, Story, StoryChoice, CompleteStory, StorySegment } from '@/types';
 
 export default function HomePage() {
@@ -57,12 +57,13 @@ export default function HomePage() {
 
       setCurrentStory(initialStory);
       
-      if (story.segments[0]?.choices?.length > 0) {
+      const firstSegment = story.segments[0];
+      if (firstSegment?.choices && firstSegment.choices.length > 0) {
         setAppState({ 
           step: 'choice', 
           story: initialStory, 
           preferences,
-          choices: story.segments[0].choices 
+          choices: firstSegment.choices 
         });
       } else {
         setAppState({ step: 'reading', story: initialStory, preferences });
